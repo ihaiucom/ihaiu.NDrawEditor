@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{3BDA84CA-8C61-88DA-C4C0-A4CA9E757898}") = "NodeDrawEditor", "Assembly-CSharp.csproj", "{0147B71E-776A-B486-D69E-E4450D5B0EEA}"
+EndProject
+Project("{3BDA84CA-8C61-88DA-C4C0-A4CA9E757898}") = "NodeDrawEditor", "Assembly-CSharp-Editor.csproj", "{4CBB8DED-2BDC-433C-A624-879A0DA8B3F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0147B71E-776A-B486-D69E-E4450D5B0EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0147B71E-776A-B486-D69E-E4450D5B0EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0147B71E-776A-B486-D69E-E4450D5B0EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0147B71E-776A-B486-D69E-E4450D5B0EEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBB8DED-2BDC-433C-A624-879A0DA8B3F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBB8DED-2BDC-433C-A624-879A0DA8B3F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBB8DED-2BDC-433C-A624-879A0DA8B3F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBB8DED-2BDC-433C-A624-879A0DA8B3F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

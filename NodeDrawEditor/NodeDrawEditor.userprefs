@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/NDraw/Editor/NDEditor.cs">
+    <Files>
+      <File FileName="Assets/NDraw/Editor/NDEditor.cs" Line="48" Column="29" />
+      <File FileName="Assets/NDraw/Script/NDNode.cs" Line="3" Column="1" />
+      <File FileName="Assets/NDraw/Editor/NDEditorWindow.cs" Line="39" Column="10" />
+      <File FileName="Assets/NDraw/Editor/NDEditorSettings.cs" Line="1" Column="1" />
+      <File FileName="Assets/NDraw/Editor/NDEditorMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets/NDraw/Editor/BaseEditorWindow.cs" Line="1" Column="1" />
+      <File FileName="Assets/NDraw/Editor/Lib/NDGraphView.cs" Line="69" Column="42" />
+      <File FileName="Assets/NDraw/Editor/Lib/CanvasView.cs" Line="17" Column="42" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
