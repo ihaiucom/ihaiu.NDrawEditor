@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 namespace ihaiu.NDraws
 {
+    [Serializable]
     public class NDNode 
     {
-        protected string _name;
+        protected string    _name;
+        protected int       _index;
+
         public string Name
         {
             get
@@ -16,6 +20,20 @@ namespace ihaiu.NDraws
             set
             {
                 _name = value;
+            }
+        }
+
+
+        public int Index
+        {
+            get
+            {
+                return _index;
+            }
+
+            set
+            {
+                _index = value;
             }
         }
     }

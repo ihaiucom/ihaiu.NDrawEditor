@@ -32,7 +32,7 @@ namespace ihaiu.NDraws
                 this.Initialized = true;
             }
 
-//            if (this.isToolWindow && !SkillEditorGUILayout.ToolWindowsCommonGUI(this))
+//            if (this.isToolWindow && !NDEditorGUILayout.ToolWindowsCommonGUI(this))
 //            {
 //                return;
 //            }

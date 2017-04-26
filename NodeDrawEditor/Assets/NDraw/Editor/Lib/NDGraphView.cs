@@ -97,9 +97,9 @@ namespace ihaiu.NDraws
         public void RefreshView()
         {
 //            this.UpdateGraphSize();
-//            this.zoom = this.canvasView.SetZoom(SkillEditor.Selection.Zoom);
+//            this.zoom = this.canvasView.SetZoom(NDEditor.Selection.Zoom);
 //            this.InitScale(this.zoom);
-//            this.canvasView.SetContentScrollPosition(SkillEditor.Selection.ScrollPosition);
+//            this.canvasView.SetContentScrollPosition(NDEditor.Selection.ScrollPosition);
 //            this.UpdateVisibility();
 //            NDGraphView.Repaint(true);
         }
@@ -110,7 +110,7 @@ namespace ihaiu.NDraws
         {
 //            if (this.eventType == 7)
 //            {
-//                SkillEditorStyles.Background.Draw(this.view, false, false, false, false);
+//                NDEditorStyles.Background.Draw(this.view, false, false, false, false);
 //                if (this.canvasView.TakingScreenshot && !this.canvasView.ScreenshotFirstTile)
 //                {
 //                    return;
@@ -119,23 +119,23 @@ namespace ihaiu.NDraws
 //                {
 //                    this.DrawWatermark();
 //                }
-//                if (SkillEditor.SelectedFsm == null)
+//                if (NDEditor.SelectedFsm == null)
 //                {
 //                    this.DoSelectionHints();
 //                }
 //                else
 //                {
-//                    string text = (SkillEditor.SelectedTemplate != null) ? string.Format(Strings.get_Label_Selected_Template(), SkillEditor.SelectedTemplate.get_name()) : Labels.GetFullFsmLabel(SkillEditor.SelectedFsm);
+//                    string text = (NDEditor.SelectedTemplate != null) ? string.Format(Strings.get_Label_Selected_Template(), NDEditor.SelectedTemplate.get_name()) : Labels.GetFullFsmLabel(NDEditor.SelectedFsm);
 //                    this.DoLargeWatermarkText(text);
 //                    if (FsmEditorSettings.ShowFsmDescriptionInGraphView)
 //                    {
-//                        this.DrawFsmDescription(SkillEditor.SelectedFsm);
+//                        this.DrawFsmDescription(NDEditor.SelectedFsm);
 //                    }
 //                }
 //            }
-//            if (!Application.get_isPlaying() && SkillEditor.SelectedFsmComponent != null && SkillEditor.SelectedFsmComponent.get_FsmTemplate() != null && GUI.Button(this.view, Strings.get_FsmGraphView_Click_to_Edit_Template(), SkillEditorStyles.CenteredLabel))
+//            if (!Application.get_isPlaying() && NDEditor.SelectedFsmComponent != null && NDEditor.SelectedFsmComponent.get_FsmTemplate() != null && GUI.Button(this.view, Strings.get_FsmGraphView_Click_to_Edit_Template(), NDEditorStyles.CenteredLabel))
 //            {
-//                SkillEditor.SelectFsm(SkillEditor.SelectedFsmComponent.get_FsmTemplate().fsm);
+//                NDEditor.SelectFsm(NDEditor.SelectedFsmComponent.get_FsmTemplate().fsm);
 //            }
         }
     }
