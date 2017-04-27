@@ -19,37 +19,58 @@ namespace ihaiu.NDraws
 		}
 
 		[SerializeField]
-		private NDEvent fsmEvent;
-		[SerializeField]
-		private string toState;
+        private NDEvent nodeEvent;
+        [SerializeField]
+        private NDNode fromNode;
+        [SerializeField]
+        private NDNode toNode;
+
+
 		[SerializeField]
 		private NDTransition.CustomLinkStyle linkStyle;
 		[SerializeField]
 		private NDTransition.CustomLinkConstraint linkConstraint;
 		[SerializeField]
 		private byte colorIndex;
-		public NDEvent FsmEvent
+
+		public NDEvent NodeEvent
 		{
 			get
 			{
-				return this.fsmEvent;
+				return this.nodeEvent;
 			}
 			set
 			{
-				this.fsmEvent = value;
+				this.nodeEvent = value;
 			}
 		}
-		public string ToState
-		{
-			get
-			{
-				return this.toState;
-			}
-			set
-			{
-				this.toState = value;
-			}
-		}
+
+        public NDNode FromNode
+        {
+            get
+            {
+                return fromNode;
+            }
+
+            set
+            {
+                fromNode = value;
+            }
+        }
+
+        public NDNode ToNode
+        {
+            get
+            {
+                return toNode;
+            }
+
+            set
+            {
+                toNode = value;
+            }
+        }
+	
 		public NDTransition.CustomLinkStyle LinkStyle
 		{
 			get
@@ -87,9 +108,9 @@ namespace ihaiu.NDraws
 		{
 			get
 			{
-				if (!NDEvent.IsNullOrEmpty(this.fsmEvent))
+				if (!NDEvent.IsNullOrEmpty(this.nodeEvent))
 				{
-					return this.fsmEvent.Name;
+					return this.nodeEvent.Name;
 				}
 				return string.Empty;
 			}
@@ -97,17 +118,26 @@ namespace ihaiu.NDraws
 		public NDTransition()
 		{
 		}
+
+        public NDTransition(NDEvent nodeEvent, NDNode fromNode, NDNode toNode)
+        {
+            this.nodeEvent      = nodeEvent;
+            this.fromNode       = fromNode;
+            this.toNode         = toNode;
+        }
+
 		public NDTransition(NDTransition source)
 		{
-			this.fsmEvent = source.FsmEvent;
-			this.toState = source.toState;
+			this.nodeEvent = source.NodeEvent;
+            this.fromNode = source.fromNode;
+            this.toNode = source.toNode;
 			this.linkStyle = source.linkStyle;
 			this.linkConstraint = source.linkConstraint;
 			this.colorIndex = source.colorIndex;
 		}
 		public bool Equals(NDTransition other)
 		{
-			return !object.ReferenceEquals(other, null) && (object.ReferenceEquals(this, other) || (!(other.toState != this.toState) && other.EventName == this.EventName));
+            return !object.ReferenceEquals(other, null) && (object.ReferenceEquals(this, other) || (!(other.fromNode != this.fromNode) && !(other.toNode != this.toNode) && other.EventName == this.EventName));
 		}
 	}
 }

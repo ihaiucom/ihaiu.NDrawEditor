@@ -20,6 +20,8 @@ namespace ihaiu.NDraws
         public static string Hint_Select_Game_Object             = "Select Game Object";
 
 
+        public static string Label_Float             = "Float";
+        public static string Label_GameObject             = "GameObject";
 
         public static string Label_Favorites             = "Favorites";
         public static string Tooltip_Favorites             = "Favorites";

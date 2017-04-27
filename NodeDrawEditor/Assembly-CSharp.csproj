@@ -47,6 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\NDraw\Script\INameable.cs" />
      <Compile Include="Assets\NDraw\Script\NDChart.cs" />
+     <Compile Include="Assets\NDraw\Script\NDChartTemplate.cs" />
      <Compile Include="Assets\NDraw\Script\NDEvent.cs" />
      <Compile Include="Assets\NDraw\Script\NDNode.cs" />
      <Compile Include="Assets\NDraw\Script\NDPrefs.cs" />

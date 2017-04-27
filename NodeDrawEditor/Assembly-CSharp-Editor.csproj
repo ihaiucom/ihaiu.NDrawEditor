@@ -49,6 +49,7 @@
      <Compile Include="Assets\NDraw\Editor\EditorApp.cs" />
      <Compile Include="Assets\NDraw\Editor\EditorCommands.cs" />
      <Compile Include="Assets\NDraw\Editor\Files.cs" />
+     <Compile Include="Assets\NDraw\Editor\Labels.cs" />
      <Compile Include="Assets\NDraw\Editor\Lib\CanvasView.cs" />
      <Compile Include="Assets\NDraw\Editor\Lib\NDGraphView.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditor.cs" />
@@ -58,6 +59,8 @@
      <Compile Include="Assets\NDraw\Editor\NDEditorSettings.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditorStyles.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditorWindow.cs" />
+     <Compile Include="Assets\NDraw\Editor\NDSelection.cs" />
+     <Compile Include="Assets\NDraw\Editor\NDSelectionHistory.cs" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity2/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

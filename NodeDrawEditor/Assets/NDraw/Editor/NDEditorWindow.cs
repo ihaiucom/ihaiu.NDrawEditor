@@ -39,6 +39,45 @@ namespace ihaiu.NDraws
         {
             ndEditor.OnGUI();
         }
+
+
+        private NDChart _testChart;
+        public NDChart testChart
+        {
+            get
+            {
+                if (_testChart == null)
+                {
+                    NDChart chart = new NDChart();
+
+                    NDNode start = new NDNode("Start");
+                    chart.AddNode(start);
+
+
+                    NDNode con = new NDNode("Condition");
+                    chart.AddNode(con);
+
+
+                    NDNode ihaiu = new NDNode("ihaiu");
+                    chart.AddNode(ihaiu);
+
+
+                    NDNode end = new NDNode("End");
+                    chart.AddNode(end);
+
+
+                    chart.AddTransition(new NDTransition(NDEvent.Entered, start, ihaiu));
+                    chart.AddTransition(new NDTransition(NDEvent.Finished, start, con));
+                    chart.AddTransition(new NDTransition(NDEvent.Finished, con, ihaiu));
+                    chart.AddTransition(new NDTransition(NDEvent.Finished, ihaiu, end));
+
+
+                    _testChart = chart;
+                }
+
+                return _testChart;
+            }
+        }
     }
 
 }

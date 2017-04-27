@@ -36,5 +36,16 @@ namespace ihaiu.NDraws
                 _index = value;
             }
         }
+
+        public NDNode()
+        {
+        }
+
+
+        public NDNode(string name)
+        {
+            _name = name;
+        }
+
     }
 }

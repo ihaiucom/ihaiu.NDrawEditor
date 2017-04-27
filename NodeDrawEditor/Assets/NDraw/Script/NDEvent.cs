@@ -149,6 +149,13 @@ namespace ihaiu.NDraws
 			get;
 			private set;
 		}
+
+        public static NDEvent Entered
+        {
+            get;
+            private set;
+        }
+
 		public static NDEvent Finished
 		{
 			get;
