@@ -178,6 +178,7 @@ namespace ihaiu.NDraws
         public void OnGUI()
         {
 
+            NDEditorStyles.Init();
             this.graphView.EnableEditing();
             this.graphView.OnGUI(new Rect(0, 0, this.window.position.width, this.window.position.height));
 
@@ -247,13 +248,12 @@ namespace ihaiu.NDraws
                 return;
             }
             NDEditor.SelectNone();
-//
-//            Keyboard.ResetFocus();
-//            NDEditor.instance.fsmSelection = NDEditor.instance.selectionHistory.SelectFsm(chart);
-//            PlayMakerGUI.SelectedFSM = NDEditor.SelectedFsm;
+
+            Keyboard.ResetFocus();
+            NDEditor.instance.selection = NDEditor.instance.selectionHistory.SelectChart(chart);
 //            NDEditor.Builder.SetTarget(NDEditor.SelectedFsm);
-//            if (NDEditor.SelectedFsm != null)
-//            {
+            if (NDEditor.SelectedChart != null)
+            {
 //                NDEditor.GraphView.UpdateGraphSize();
 //                NDEditor.GraphView.SanityCheckGraphBounds();
 //                NDEditor.GraphView.UpdateVisibility();
@@ -277,7 +277,7 @@ namespace ihaiu.NDraws
 //                FsmInspector.Init();
 //                NDEditor.SanityCheckFsm(NDEditor.SelectedFsm);
 //                FsmErrorChecker.CheckFsmForErrors(chart, false);
-//            }
+            }
 //            if (!FsmEditorSettings.LockGraphView && FsmEditorSettings.AutoSelectGameObject)
 //            {
 //                NDEditor.Selection.SelectActiveFsmGameObject();

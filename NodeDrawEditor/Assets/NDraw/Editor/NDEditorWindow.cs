@@ -32,6 +32,7 @@ namespace ihaiu.NDraws
 
             ndEditor.InitWindow(this);
             ndEditor.OnEnable();
+            NDEditor.SelectChart(testChart);
         }
 
 

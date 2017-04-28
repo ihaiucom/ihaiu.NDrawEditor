@@ -49,9 +49,15 @@
      <Compile Include="Assets\NDraw\Script\NDChart.cs" />
      <Compile Include="Assets\NDraw\Script\NDChartTemplate.cs" />
      <Compile Include="Assets\NDraw\Script\NDEvent.cs" />
+     <Compile Include="Assets\NDraw\Script\NDLog.cs" />
+     <Compile Include="Assets\NDraw\Script\NDLogEntry.cs" />
+     <Compile Include="Assets\NDraw\Script\NDLogType.cs" />
      <Compile Include="Assets\NDraw\Script\NDNode.cs" />
+     <Compile Include="Assets\NDraw\Script\NDNodeAction.cs" />
      <Compile Include="Assets\NDraw\Script\NDPrefs.cs" />
+     <Compile Include="Assets\NDraw\Script\NDTime.cs" />
      <Compile Include="Assets\NDraw\Script\NDTransition.cs" />
+     <Compile Include="Assets\NDraw\Script\NDlUtility.cs" />
      <Compile Include="Assets\NDraw\Script\Strings.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity2/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

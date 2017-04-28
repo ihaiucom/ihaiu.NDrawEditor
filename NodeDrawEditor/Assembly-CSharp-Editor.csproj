@@ -46,12 +46,19 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\NDraw\Editor\BaseEditorWindow.cs" />
+     <Compile Include="Assets\NDraw\Editor\DrawState.cs" />
      <Compile Include="Assets\NDraw\Editor\EditorApp.cs" />
      <Compile Include="Assets\NDraw\Editor\EditorCommands.cs" />
      <Compile Include="Assets\NDraw\Editor\Files.cs" />
+     <Compile Include="Assets\NDraw\Editor\GameState.cs" />
+     <Compile Include="Assets\NDraw\Editor\GameStateTracker.cs" />
+     <Compile Include="Assets\NDraw\Editor\Keyboard.cs" />
      <Compile Include="Assets\NDraw\Editor\Labels.cs" />
      <Compile Include="Assets\NDraw\Editor\Lib\CanvasView.cs" />
+     <Compile Include="Assets\NDraw\Editor\Lib\GraphViewLinkStyle.cs" />
      <Compile Include="Assets\NDraw\Editor\Lib\NDGraphView.cs" />
+     <Compile Include="Assets\NDraw\Editor\NDDebugger.cs" />
+     <Compile Include="Assets\NDraw\Editor\NDDrawState.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditor.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditorContent.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditorGUILayout.cs" />

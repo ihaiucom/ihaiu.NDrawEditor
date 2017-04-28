@@ -78,7 +78,7 @@ namespace ihaiu.NDraws
             this.DrawBackground();
 //            this.DoCanvasView();
 //            this.DoMinimap();
-//            this.DoGameStateIcon();
+            this.DoGameStateIcon();
 //            this.DrawFrame();
 //            this.DrawHintBox();
 //            this.DoDebugText();
@@ -137,6 +137,75 @@ namespace ihaiu.NDraws
 //            {
 //                NDEditor.SelectFsm(NDEditor.SelectedFsmComponent.get_FsmTemplate().fsm);
 //            }
+        }
+
+        private void DoGameStateIcon()
+        {
+//            if (NDEditor.SelectedChart == null || !EditorApplication.isPlaying)
+//            {
+//                return;
+//            }
+            float num = (float)NDEditorSettings.GameStateIconSize ;
+            Rect rect = new Rect(10f, this.view.height - num, num, num + 20f);
+//            if (NDEditor.SelectChart.get_Active() && !NDEditor.SelectChart.get_Finished())
+//            {
+//                Texture2D texture2D = NDEditorStyles.GetGameStateIcons()[(int)GameStateTracker.CurrentState];
+//                if (texture2D != null && GUI.Button(rect, texture2D, GUIStyle.none))
+//                {
+//                    switch (GameStateTracker.CurrentState)
+//                    {
+//                        case GameState.Running:
+//                            EditorApplication.isPaused = true;
+//                            break;
+//                        case GameState.Break:
+//                        case GameState.Error:
+//                            NDEditor.GotoBreakpoint();
+//                            break;
+//                        case GameState.Paused:
+//                            EditorApplication.isPaused = false;
+//                            break;
+//                    }
+//                }
+//            }
+            Color color         = GUI.color;
+            DrawState drawState = NDDrawState.GetDrawNode(NDEditor.SelectedChart);
+            GUI.color           = NDEditorStyles.HighlightColors[(int)drawState];
+            rect.y              = rect.y - 3f;
+            rect.width          = this.view.width - rect.width;
+
+            string text;
+            if (!NDEditor.SelectedChart.Active)
+            {
+                rect.x      = 5;
+                text        = Strings.Label_DISABLED;
+                GUI.color   = NDEditorStyles.LargeWatermarkText.normal.textColor;
+            }
+            else
+            {
+                if (NDEditor.SelectedChart.Finished)
+                {
+                    rect.x      = 5;
+                    text        = Strings.Label_FINISHED;
+                    GUI.color   = NDEditorStyles.LargeWatermarkText.normal.textColor;
+                }
+                else
+                {
+                    rect.x = 45;
+
+//                    if (DebugFlow.ActiveAndScrubbing)
+//                    {
+//                        text = ((DebugFlow.DebugState != null) ? DebugFlow.DebugState.get_Name() : (" " + Strings.get_Label_None_In_Table()));
+//                    }
+//                    else
+                    {
+                        text = NDEditor.SelectedChart.ActiveNodeName;
+                    }
+                }
+            }
+            GUI.Box(rect, text, NDEditorStyles.LargeText);
+            GUI.color = color;
+
+
         }
     }
 }

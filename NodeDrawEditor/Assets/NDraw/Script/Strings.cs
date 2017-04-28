@@ -22,6 +22,9 @@ namespace ihaiu.NDraws
 
         public static string Label_Float             = "Float";
         public static string Label_GameObject             = "GameObject";
+        public static string Label_DISABLED             = "DISABLED";
+        public static string Label_FINISHED             = "FINISHED";
+
 
         public static string Label_Favorites             = "Favorites";
         public static string Tooltip_Favorites             = "Favorites";

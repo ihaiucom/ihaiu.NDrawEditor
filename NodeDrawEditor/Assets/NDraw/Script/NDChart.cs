@@ -45,11 +45,94 @@ namespace ihaiu.NDraws
 
         [SerializeField]
         private NDNode              activeNode;
+
+
+        private NDLog               myLog;
+        #endregion
+
+        #region Static Property
+        public static bool IsBreak
+        {
+            get;
+            private set;
+        }
+        public static bool IsErrorBreak
+        {
+            get;
+            private set;
+        }
+        public static string LastError
+        {
+            get;
+            private set;
+        }
+        public static bool StepToStateChange
+        {
+            get;
+            set;
+        }
+
+        public static NDChart BreakAtchart
+        {
+            get;
+            set;
+        }
+        public static NDNode BreakAtnode
+        {
+            get;
+            set;
+        }
         #endregion
 
 
-
         #region Property
+
+        public bool Initialized
+        {
+            get;
+            private set;
+        }
+        public bool Active
+        {
+            get;
+            private set;
+        }
+        public bool Finished
+        {
+            get;
+            private set;
+        }
+        public bool IsSwitchingState
+        {
+            get;
+            private set;
+        }
+        public bool SwitchedState
+        {
+            get;
+            set;
+        }
+        public NDTransition LastTransition
+        {
+            get;
+            private set;
+        }
+
+        public NDLog MyLog
+        {
+            get
+            {
+                NDLog log;
+                if ((log = myLog) == null)
+                {
+                    log = (myLog = NDLog.GetLog(this));
+                }
+                return log;
+            }
+        }
+
+
+        //
         public NDChart Host
         {
             get
@@ -201,6 +284,18 @@ namespace ihaiu.NDraws
             private set
             {
                 this.activeNode = value;
+            }
+        }
+
+        public string ActiveNodeName
+        {
+            get
+            {
+                if (ActiveNode != null)
+                {
+                    return ActiveNode.Name;
+                }
+                return "No ActiveNode";
             }
         }
 

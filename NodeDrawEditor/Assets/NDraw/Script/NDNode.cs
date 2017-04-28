@@ -37,6 +37,19 @@ namespace ihaiu.NDraws
             }
         }
 
+
+        public NDChart Chart
+        {
+            get;
+            set;
+        }
+
+        public bool Active
+        {
+            get;
+            set;
+        }
+
         public NDNode()
         {
         }
