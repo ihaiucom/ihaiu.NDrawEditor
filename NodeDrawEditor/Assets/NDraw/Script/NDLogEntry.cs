@@ -32,7 +32,7 @@ namespace ihaiu.NDraws
             get;
             set;
         }
-        public SkillStateAction Action
+        public NDNodeAction Action
         {
             get;
             set;

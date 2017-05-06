@@ -20,7 +20,7 @@ namespace ihaiu.NDraws
             }
             return ((node.Chart != null) ? node.Chart.Name : "[missing FSM]") + ": " + node.Name + ": ";
         }
-        public static string GetPath(NDNode node, SkillStateAction action)
+        public static string GetPath(NDNode node, NDNodeAction action)
         {
             if (action == null)
             {
@@ -28,7 +28,7 @@ namespace ihaiu.NDraws
             }
             return GetPath(node) + action.GetType().Name + ": ";
         }
-        public static string GetPath(NDNode node, SkillStateAction action, string parameter)
+        public static string GetPath(NDNode node, NDNodeAction action, string parameter)
         {
             return GetPath(node, action) + parameter + ": ";
         }

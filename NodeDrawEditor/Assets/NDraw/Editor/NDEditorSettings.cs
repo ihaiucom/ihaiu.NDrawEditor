@@ -573,12 +573,12 @@ namespace ihaiu.NDraws
             GUILayout.EndScrollView();
             NDEditorGUILayout.Divider(new GUILayoutOption[0]);
             EditorGUILayout.BeginHorizontal(new GUILayoutOption[0]);
-            if (GUILayout.Button(Strings.get_FsmEditorSettings_Restore_Default_Settings(), new GUILayoutOption[0]))
+            if (GUILayout.Button(Strings.NDEditorSettings_Restore_Default_Settings, new GUILayoutOption[0]))
             {
                 ResetDefaults();
                 SaveSettings();
             }
-            if (SkillEditorGUILayout.HelpButton("Online Help"))
+            if (NDEditorGUILayout.HelpButton("Online Help"))
             {
                 EditorCommands.OpenWikiPage(WikiPages.Preferences);
             }
@@ -587,149 +587,149 @@ namespace ihaiu.NDraws
         }
         private static void DoColorSettings()
         {
-            GUILayout.Label(Strings.get_FsmEditorSettings_Default_Colors(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
+            GUILayout.Label(Strings.NDEditorSettings_Default_Colors, EditorStyles.boldLabel, new GUILayoutOption[0]);
             for (int i = 0; i < 8; i++)
             {
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
-                PlayMakerPrefs.get_ColorNames()[i] = EditorGUILayout.TextField(PlayMakerPrefs.get_ColorNames()[i], new GUILayoutOption[0]);
-                PlayMakerPrefs.get_Colors()[i] = EditorGUILayout.ColorField(PlayMakerPrefs.get_Colors()[i], new GUILayoutOption[0]);
+                NDPrefs.ColorNames[i] = EditorGUILayout.TextField(NDPrefs.ColorNames[i], new GUILayoutOption[0]);
+                NDPrefs.Colors[i] = EditorGUILayout.ColorField(NDPrefs.Colors[i], new GUILayoutOption[0]);
                 GUILayout.EndHorizontal();
             }
-            if (GUILayout.Button(Strings.get_FsmEditorSettings_Reset_Default_Colors(), new GUILayoutOption[0]))
+            if (GUILayout.Button(Strings.NDEditorSettings_Reset_Default_Colors, new GUILayoutOption[0]))
             {
-                PlayMakerPrefs.get_Instance().ResetDefaultColors();
+                NDPrefs.Instance.ResetDefaultColors();
                 Keyboard.ResetFocus();
-                GUI.set_changed(true);
+                GUI.changed = true;
             }
-            GUILayout.Label(Strings.get_FsmEditorSettings_Custom_Colors(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
+            GUILayout.Label(Strings.NDEditorSettings_Custom_Colors_Name_Hint, EditorStyles.boldLabel, new GUILayoutOption[0]);
             for (int j = 8; j < 24; j++)
             {
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
-                PlayMakerPrefs.get_ColorNames()[j] = EditorGUILayout.TextField(PlayMakerPrefs.get_ColorNames()[j], new GUILayoutOption[0]);
-                PlayMakerPrefs.get_Colors()[j] = EditorGUILayout.ColorField(PlayMakerPrefs.get_Colors()[j], new GUILayoutOption[0]);
+                NDPrefs.ColorNames[j] = EditorGUILayout.TextField(NDPrefs.ColorNames[j], new GUILayoutOption[0]);
+                NDPrefs.Colors[j] = EditorGUILayout.ColorField(NDPrefs.Colors[j], new GUILayoutOption[0]);
                 GUILayout.EndHorizontal();
             }
-            EditorGUILayout.HelpBox(Strings.get_FsmEditorSettings_Custom_Colors_Name_Hint(), 1);
-            if (GUI.get_changed())
+            EditorGUILayout.HelpBox(Strings.NDEditorSettings_Custom_Colors_Name_Hint, 1);
+            if (GUI.changed)
             {
                 SavePlayMakerPrefs();
             }
         }
         private static void SavePlayMakerPrefs()
         {
-            PlayMakerPrefs.SaveChanges();
-            EditorUtility.SetDirty(PlayMakerPrefs.get_Instance());
-            if (!AssetDatabase.Contains(PlayMakerPrefs.get_Instance()))
+            NDPrefs.SaveChanges();
+            EditorUtility.SetDirty(NDPrefs.Instance);
+            if (!AssetDatabase.Contains(NDPrefs.Instance))
             {
-                string text = Path.Combine(SkillPaths.ResourcesPath, "PlayMakerPrefs.asset");
-                SkillEditor.CreateAsset(PlayMakerPrefs.get_Instance(), ref text);
-                Debug.Log(Strings.get_FsmEditorSettings_Creating_PlayMakerPrefs_Asset() + text);
+                string text = Path.Combine(NDPaths.ResourcesPath, "NDPrefs.asset");
+                NDEditor.CreateAsset(NDPrefs.Instance, ref text);
+                Debug.Log(Strings.NDEditorSettings_Creating_NDPrefs_Asset + text);
             }
         }
         private static void DoDebuggingSettings()
         {
             if (ShowHints)
             {
-                GUILayout.Box(Strings.get_Hint_Debugger_Settings(), SkillEditorStyles.HintBox, new GUILayoutOption[0]);
+                GUILayout.Box(Strings.Hint_Debugger_Settings, NDEditorStyles.HintBox, new GUILayoutOption[0]);
             }
-            ShowStateLabelsInGameView = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_State_Labels_in_Game_View(), Strings.get_FsmEditorSettings_DoDebuggingSettings_Show_State_Labels_Tooltip()), ShowStateLabelsInGameView);
-            EnableLogging = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Enable_Logging(), Strings.get_FsmEditorSettings_Enable_Logging_Tooltip()), EnableLogging);
-            EnableDebugFlow = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Enable_DebugFlow(), Strings.get_FsmEditorSettings_Enable_DebugFlow_Tooltip()), EnableDebugFlow);
-            EnableTransitionEffects = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Enable_Transition_Effects(), Strings.get_FsmEditorSettings_Enable_Transition_Effects_Tooltip()), EnableTransitionEffects);
-            JumpToBreakpoint = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Jump_to_Breakpoint_Error(), Strings.get_FsmEditorSettings_Jump_to_Breakpoint_Error_Tooltip()), JumpToBreakpoint);
-            MirrorDebugLog = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Forward_Playmaker_Log_to_Unity_Log(), Strings.get_FsmEditorSettings_Forward_Playmaker_Log_to_Unity_Log_Tooltip()), MirrorDebugLog);
-            DebugLookAtColor = EditorGUILayout.ColorField(Strings.get_FsmEditorSettings_Debug_Look_At_Color(), DebugLookAtColor, new GUILayoutOption[0]);
-            DebugRaycastColor = EditorGUILayout.ColorField(Strings.get_FsmEditorSettings_Debug_Raypick_Color(), DebugRaycastColor, new GUILayoutOption[0]);
+            ShowStateLabelsInGameView = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Show_State_Labels_in_Game_View, Strings.NDEditorSettings_DoDebuggingSettings_Show_State_Labels_Tooltip), ShowStateLabelsInGameView);
+            EnableLogging = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Enable_Logging, Strings.NDEditorSettings_Enable_Logging_Tooltip), EnableLogging);
+            EnableDebugFlow = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Enable_DebugFlow, Strings.NDEditorSettings_Enable_DebugFlow_Tooltip), EnableDebugFlow);
+            EnableTransitionEffects = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Enable_Transition_Effects, Strings.NDEditorSettings_Enable_Transition_Effects_Tooltip), EnableTransitionEffects);
+            JumpToBreakpoint = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Jump_to_Breakpoint_Error, Strings.NDEditorSettings_Jump_to_Breakpoint_Error_Tooltip), JumpToBreakpoint);
+            MirrorDebugLog = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Forward_Playmaker_Log_to_Unity_Log, Strings.NDEditorSettings_Forward_Playmaker_Log_to_Unity_Log_Tooltip), MirrorDebugLog);
+            DebugLookAtColor = EditorGUILayout.ColorField(Strings.NDEditorSettings_Debug_Look_At_Color, DebugLookAtColor, new GUILayoutOption[0]);
+            DebugRaycastColor = EditorGUILayout.ColorField(Strings.NDEditorSettings_Debug_Raypick_Color, DebugRaycastColor, new GUILayoutOption[0]);
         }
         private static void DoErrorCheckSettings()
         {
             if (ShowHints)
             {
-                GUILayout.Box(Strings.get_Hint_Error_Checker_Settings(), SkillEditorStyles.HintBox, new GUILayoutOption[0]);
+                GUILayout.Box(Strings.Hint_Error_Checker_Settings, NDEditorStyles.HintBox, new GUILayoutOption[0]);
             }
-            bool changed = GUI.get_changed();
-            EnableRealtimeErrorChecker = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Enable_Real_Time_Error_Checker(), Strings.get_FsmEditorSettings_Enable_Real_Time_Error_Checker_Tooltip()), EnableRealtimeErrorChecker);
-            DisableErrorCheckerWhenPlaying = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Disable_Error_Checker_When_Game_Is_Playing(), Strings.get_FsmEditorSettings_Disable_Error_Checker_When_Game_Is_Playing_Tooltip()), DisableErrorCheckerWhenPlaying);
-            CheckForRequiredComponent = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Required_Components(), Strings.get_FsmEditorSettings_Check_for_Required_Components_Tooltip()), CheckForRequiredComponent);
-            CheckForRequiredField = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Required_Action_Fields(), Strings.get_FsmEditorSettings_Check_for_Required_Action_Fields_Tooltip()), CheckForRequiredField);
-            CheckForEventNotUsed = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Events_Not_Used_by_Target_FSM(), Strings.get_FsmEditorSettings_Check_for_Events_Not_Used_by_Target_FSM_Tooltip()), CheckForEventNotUsed);
-            CheckForTransitionMissingEvent = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Transitions_Missing_Events(), Strings.get_FsmEditorSettings_Check_for_Transitions_Missing_Events_Tooltip()), CheckForTransitionMissingEvent);
-            CheckForTransitionMissingTarget = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Transitions_Missing_Targets(), Strings.get_FsmEditorSettings_Check_for_Transitions_Missing_Targets_Tooltip()), CheckForTransitionMissingTarget);
-            CheckForDuplicateTransitionEvent = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Duplicate_Transition_Events(), Strings.get_FsmEditorSettings_Check_for_Duplicate_Transition_Events_Tooltip()), CheckForDuplicateTransitionEvent);
-            CheckForMouseEventErrors = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Setup_Errors_With_Mouse_Events(), Strings.get_FsmEditorSettings_Check_for_Setup_Errors_With_Mouse_Events_Tooltip()), CheckForMouseEventErrors);
-            CheckForCollisionEventErrors = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Setup_Errors_With_Collision_Events(), Strings.get_FsmEditorSettings_Check_for_Setup_Errors_With_Collision_Events_Tooltip()), CheckForCollisionEventErrors);
-            CheckForPrefabRestrictions = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Prefab_Restrictions(), Strings.get_FsmEditorSettings_Check_for_Prefab_Restrictions_Tooltip()), CheckForPrefabRestrictions);
-            CheckForObsoleteActions = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Obsolete_Actions(), Strings.get_FsmEditorSettings_Check_for_Obsolete_Actions_Tooltip()), CheckForObsoleteActions);
-            CheckForMissingActions = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Missing_Actions(), Strings.get_FsmEditorSettings_Check_for_Missing_Actions_Tooltip()), CheckForMissingActions);
-            CheckForNetworkSetupErrors = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Check_for_Network_Setup_Errors(), Strings.get_FsmEditorSettings_Check_for_Network_Setup_Errors_Tooltip()), CheckForNetworkSetupErrors);
-            if (GUI.get_changed())
+            bool changed = GUI.changed;
+            EnableRealtimeErrorChecker = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Enable_Real_Time_Error_Checker, Strings.NDEditorSettings_Enable_Real_Time_Error_Checker_Tooltip), EnableRealtimeErrorChecker);
+            DisableErrorCheckerWhenPlaying = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Disable_Error_Checker_When_Game_Is_Playing, Strings.NDEditorSettings_Disable_Error_Checker_When_Game_Is_Playing_Tooltip), DisableErrorCheckerWhenPlaying);
+            CheckForRequiredComponent = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Required_Components, Strings.NDEditorSettings_Check_for_Required_Components_Tooltip), CheckForRequiredComponent);
+            CheckForRequiredField = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Required_Action_Fields, Strings.NDEditorSettings_Check_for_Required_Action_Fields_Tooltip), CheckForRequiredField);
+            CheckForEventNotUsed = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Events_Not_Used_by_Target_FSM, Strings.NDEditorSettings_Check_for_Events_Not_Used_by_Target_FSM_Tooltip), CheckForEventNotUsed);
+            CheckForTransitionMissingEvent = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Transitions_Missing_Events, Strings.NDEditorSettings_Check_for_Transitions_Missing_Events_Tooltip), CheckForTransitionMissingEvent);
+            CheckForTransitionMissingTarget = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Transitions_Missing_Targets, Strings.NDEditorSettings_Check_for_Transitions_Missing_Targets_Tooltip), CheckForTransitionMissingTarget);
+            CheckForDuplicateTransitionEvent = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Duplicate_Transition_Events, Strings.NDEditorSettings_Check_for_Duplicate_Transition_Events_Tooltip), CheckForDuplicateTransitionEvent);
+            CheckForMouseEventErrors = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Setup_Errors_With_Mouse_Events, Strings.NDEditorSettings_Check_for_Setup_Errors_With_Mouse_Events_Tooltip), CheckForMouseEventErrors);
+            CheckForCollisionEventErrors = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Setup_Errors_With_Collision_Events, Strings.NDEditorSettings_Check_for_Setup_Errors_With_Collision_Events_Tooltip), CheckForCollisionEventErrors);
+            CheckForPrefabRestrictions = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Prefab_Restrictions, Strings.NDEditorSettings_Check_for_Prefab_Restrictions_Tooltip), CheckForPrefabRestrictions);
+            CheckForObsoleteActions = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Obsolete_Actions, Strings.NDEditorSettings_Check_for_Obsolete_Actions_Tooltip), CheckForObsoleteActions);
+            CheckForMissingActions = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Missing_Actions, Strings.NDEditorSettings_Check_for_Missing_Actions_Tooltip), CheckForMissingActions);
+            CheckForNetworkSetupErrors = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Check_for_Network_Setup_Errors, Strings.NDEditorSettings_Check_for_Network_Setup_Errors_Tooltip), CheckForNetworkSetupErrors);
+            if (GUI.changed)
             {
-                FsmErrorChecker.Refresh();
-                SkillEditor.RepaintAll();
+//                NDErrorChecker.Refresh();
+                NDEditor.RepaintAll();
                 return;
             }
-            GUI.set_changed(changed);
+            GUI.changed = changed;
         }
         private static void DoGeneralSettings()
         {
             if (ShowHints)
             {
-                GUILayout.Box(Strings.get_FsmEditorHint_General_Settings(), SkillEditorStyles.HintBox, new GUILayoutOption[0]);
+                GUILayout.Box(Strings.NDEditorHint_General_Settings, NDEditorStyles.HintBox, new GUILayoutOption[0]);
             }
-            int num = EditorGUILayout.Popup(Strings.get_Label_Language(), selectedCulture, cultureNames, new GUILayoutOption[0]);
+            int num = EditorGUILayout.Popup(Strings.Label_Language, selectedCulture, cultureNames, new GUILayoutOption[0]);
             if (num != selectedCulture)
             {
                 SetCulture(num);
             }
             if (selectedCultureTranslators != "")
             {
-                EditorGUILayout.HelpBox(Strings.get_FsmEditorSettings_Translators() + selectedCultureTranslators, 0);
+                EditorGUILayout.HelpBox(Strings.NDEditorSettings_Translators + selectedCultureTranslators, 0);
             }
             if (!selectedCultureSupportedInMenus)
             {
-                EditorGUILayout.HelpBox(Strings.get_FsmEditorSettings_Selected_language_not_yet_supported_in_menus(), 0);
+                EditorGUILayout.HelpBox(Strings.NDEditorSettings_Selected_language_not_yet_supported_in_menus, 0);
             }
-            GUILayout.Label(Strings.get_FsmEditorSettings_Category_Components_and_Gizmos(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            AutoAddPlayMakerGUI = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Auto_Add_PlayMakerGUI_to_Scene(), Strings.get_FsmEditorSettings_Auto_Add_PlayMakerGUI_to_Scene_Tooltip()), AutoAddPlayMakerGUI);
-            ShowStateLabelsInGameView = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_State_Labels_in_Game_View(), Strings.get_FsmEditorSettings_DoDebuggingSettings_Show_State_Labels_Tooltip()), ShowStateLabelsInGameView);
-            bool flag = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Draw_Playmaker_Gizmos_in_Scene_View(), Strings.get_FsmEditorSettings_Draw_Playmaker_Gizmos_in_Scene_View_Tooltip()), DrawPlaymakerGizmos);
+            GUILayout.Label(Strings.NDEditorSettings_Category_Components_and_Gizmos, EditorStyles.boldLabel, new GUILayoutOption[0]);
+            AutoAddPlayMakerGUI = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Auto_Add_PlayMakerGUI_to_Scene, Strings.NDEditorSettings_Auto_Add_PlayMakerGUI_to_Scene_Tooltip), AutoAddPlayMakerGUI);
+            ShowStateLabelsInGameView = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Show_State_Labels_in_Game_View, Strings.NDEditorSettings_DoDebuggingSettings_Show_State_Labels_Tooltip), ShowStateLabelsInGameView);
+            bool flag = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Draw_Playmaker_Gizmos_in_Scene_View, Strings.NDEditorSettings_Draw_Playmaker_Gizmos_in_Scene_View_Tooltip), DrawPlaymakerGizmos);
             if (flag != DrawPlaymakerGizmos)
             {
                 DrawPlaymakerGizmos = flag;
-                PlayMakerFSM.set_DrawGizmos(flag);
-                GUI.set_changed(true);
+//                PlayMakerFSM.DrawGizmos = flag;
+                GUI.changed = true;
             }
-            flag = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Draw_Playmaker_Gizmos_in_Hierarchy(), Strings.get_FsmEditorSettings_Draw_Playmaker_Gizmos_in_Hierarchy_Tooltip()), DrawPlaymakerGizmoInHierarchy);
+            flag = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Draw_Playmaker_Gizmos_in_Hierarchy, Strings.NDEditorSettings_Draw_Playmaker_Gizmos_in_Hierarchy_Tooltip), DrawPlaymakerGizmoInHierarchy);
             if (flag != DrawPlaymakerGizmoInHierarchy)
             {
                 Gizmos.EnableHierarchyItemGizmos = flag;
                 DrawPlaymakerGizmoInHierarchy = flag;
                 EditorApplication.RepaintHierarchyWindow();
             }
-            GUILayout.Label(Strings.get_FsmEditorSettings_Category_When_Game_Is_Playing(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            ShowEditWhileRunningWarning = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Editing_While_Running_Warning(), Strings.get_FsmEditorSettings_Show_Editing_While_Running_Warning_Tooltip()), ShowEditWhileRunningWarning);
-            DisableEditorWhenPlaying = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Disable_PlayMaker_Editor_When_Game_Is_Playing(), Strings.get_FsmEditorSettings_Disable_PlayMaker_Editor_When_Game_Is_Playing_Tooltip()), DisableEditorWhenPlaying);
-            DisableInspectorWhenPlaying = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Disable_the_Inspector_Panel_When_Game_Is_Playing(), Strings.get_FsmEditorSettings_Disable_the_Inspector_Panel_When_Game_Is_Playing_Tooltip()), DisableInspectorWhenPlaying);
-            DisableToolWindowsWhenPlaying = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Disable_Tool_Windows_When_Game_Is_Playing(), Strings.get_FsmEditorSettings_Disable_Tool_Windows_When_Game_Is_Playing_Tooltip()), DisableToolWindowsWhenPlaying);
-            DisableErrorCheckerWhenPlaying = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Disable_Error_Checker_When_Game_Is_Playing(), Strings.get_FsmEditorSettings_Disable_Error_Checker_When_Game_Is_Playing_Tooltip()), DisableErrorCheckerWhenPlaying);
-            DimFinishedActions = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Dim_Finished_Actions(), Strings.get_FsmEditorSettings_Dim_Finished_Actions_Tooltip()), DimFinishedActions);
-            GUILayout.Label(Strings.get_FsmEditorSettings_Category_Selection(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            AutoSelectGameObject = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Select_GameObject_When_FSM_Selected(), Strings.get_FsmEditorSettings_Select_GameObject_When_FSM_Selected_Tooltip()), AutoSelectGameObject);
-            SelectStateOnActivated = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Select_State_On_Activated(), Strings.get_FsmEditorSettings_Select_State_On_Activated_Tooltip()), SelectStateOnActivated);
-            FrameSelectedState = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Auto_Frame_Selected_State(), Strings.get_FsmEditorSettings_Auto_Frame_Selected_State_Tooltip()), FrameSelectedState);
-            SelectFSMInGameView = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Select_Game_Objects_With_FSMs_in_Game_View(), Strings.get_FsmEditorSettings_Select_Game_Objects_With_FSMs_in_Game_View_Tooltip()), SelectFSMInGameView);
-            GUILayout.Label(Strings.get_FsmEditorSettings_Category_Prefabs(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            ConfirmEditingPrefabInstances = SkillEditorGUILayout.RightAlignedToggle(SkillEditorContent.ConfirmEditPrefabInstance, ConfirmEditingPrefabInstances);
-            LoadAllPrefabs = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Load_All_PlayMakerFSM_Prefabs_When_Refactoring(), Strings.get_FsmEditorSettings_Load_All_PlayMakerFSM_Prefabs_When_Refactoring_Tooltip()), LoadAllPrefabs);
-            AutoLoadPrefabs = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Auto_Load_Prefabs_in_Scene(), Strings.get_FsmEditorSettings_Auto_Load_Prefabs_in_Scene_Tooltip()), AutoLoadPrefabs);
-            AddPrefabLabel = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Add_Prefab_Labels(), Strings.get_FsmEditorSettings_Add_Prefab_Labels_Tooltip()), AddPrefabLabel);
-            GUILayout.Label(Strings.get_FsmEditorSettings_Cetegory_Paths(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            GUILayout.Label(new GUIContent(Strings.get_FsmEditorSettings_FSM_Screenshots_Directory(), Strings.get_FsmEditorSettings_FSM_Screenshots_Directory_Tooltip()), new GUILayoutOption[0]);
+            GUILayout.Label(Strings.NDEditorSettings_Category_When_Game_Is_Playing, EditorStyles.boldLabel, new GUILayoutOption[0]);
+            ShowEditWhileRunningWarning = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Show_Editing_While_Running_Warning, Strings.NDEditorSettings_Show_Editing_While_Running_Warning_Tooltip), ShowEditWhileRunningWarning);
+            DisableEditorWhenPlaying = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Disable_PlayMaker_Editor_When_Game_Is_Playing, Strings.NDEditorSettings_Disable_PlayMaker_Editor_When_Game_Is_Playing_Tooltip), DisableEditorWhenPlaying);
+            DisableInspectorWhenPlaying = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Disable_the_Inspector_Panel_When_Game_Is_Playing, Strings.NDEditorSettings_Disable_the_Inspector_Panel_When_Game_Is_Playing_Tooltip), DisableInspectorWhenPlaying);
+            DisableToolWindowsWhenPlaying = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Disable_Tool_Windows_When_Game_Is_Playing, Strings.NDEditorSettings_Disable_Tool_Windows_When_Game_Is_Playing_Tooltip), DisableToolWindowsWhenPlaying);
+            DisableErrorCheckerWhenPlaying = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Disable_Error_Checker_When_Game_Is_Playing, Strings.NDEditorSettings_Disable_Error_Checker_When_Game_Is_Playing_Tooltip), DisableErrorCheckerWhenPlaying);
+            DimFinishedActions = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Dim_Finished_Actions, Strings.NDEditorSettings_Dim_Finished_Actions_Tooltip), DimFinishedActions);
+            GUILayout.Label(Strings.NDEditorSettings_Category_Selection, EditorStyles.boldLabel, new GUILayoutOption[0]);
+            AutoSelectGameObject = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Select_GameObject_When_FSM_Selected, Strings.NDEditorSettings_Select_GameObject_When_FSM_Selected_Tooltip), AutoSelectGameObject);
+            SelectStateOnActivated = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Select_State_On_Activated, Strings.NDEditorSettings_Select_State_On_Activated_Tooltip), SelectStateOnActivated);
+            FrameSelectedState = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Auto_Frame_Selected_State, Strings.NDEditorSettings_Auto_Frame_Selected_State_Tooltip), FrameSelectedState);
+            SelectFSMInGameView = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Select_Game_Objects_With_FSMs_in_Game_View, Strings.NDEditorSettings_Select_Game_Objects_With_FSMs_in_Game_View_Tooltip), SelectFSMInGameView);
+            GUILayout.Label(Strings.NDEditorSettings_Category_Prefabs, EditorStyles.boldLabel, new GUILayoutOption[0]);
+            ConfirmEditingPrefabInstances = NDEditorGUILayout.RightAlignedToggle(NDEditorContent.ConfirmEditPrefabInstance, ConfirmEditingPrefabInstances);
+            LoadAllPrefabs = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Load_All_PlayMakerFSM_Prefabs_When_Refactoring, Strings.NDEditorSettings_Load_All_PlayMakerFSM_Prefabs_When_Refactoring_Tooltip), LoadAllPrefabs);
+            AutoLoadPrefabs = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Auto_Load_Prefabs_in_Scene, Strings.NDEditorSettings_Auto_Load_Prefabs_in_Scene_Tooltip), AutoLoadPrefabs);
+            AddPrefabLabel = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Add_Prefab_Labels, Strings.NDEditorSettings_Add_Prefab_Labels_Tooltip), AddPrefabLabel);
+            GUILayout.Label(Strings.NDEditorSettings_Cetegory_Paths, EditorStyles.boldLabel, new GUILayoutOption[0]);
+            GUILayout.Label(new GUIContent(Strings.NDEditorSettings_FSM_Screenshots_Directory, Strings.NDEditorSettings_FSM_Screenshots_Directory_Tooltip), new GUILayoutOption[0]);
             ScreenshotsPath = EditorGUILayout.TextField(ScreenshotsPath, new GUILayoutOption[0]);
-            GUILayout.Label(Strings.get_FsmEditorSettings_Experimental(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            DisableUndoRedo = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Disable_Undo_Redo(), Strings.get_FsmEditorSettings_Disable_Undo_Redo_Tooltip()), DisableUndoRedo);
+            GUILayout.Label(Strings.NDEditorSettings_Experimental, EditorStyles.boldLabel, new GUILayoutOption[0]);
+            DisableUndoRedo = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.NDEditorSettings_Disable_Undo_Redo, Strings.NDEditorSettings_Disable_Undo_Redo_Tooltip), DisableUndoRedo);
         }
-        [Localizable(false)]
+
         private static void SetCulture(int cultureIndex)
         {
             if (cultureIndex >= cultureNames.Length)
@@ -749,10 +749,10 @@ namespace ihaiu.NDraws
                     Strings.get_BugReportWindow_FrequencyChoices_Sometimes__but_not_always(),
                     Strings.get_BugReportWindow_FrequencyChoices_This_is_the_first_time()
                 };
-            SkillEditorStyles.Reinitialize();
-            SkillEditor.RepaintAll();
+            NDEditorStyles.Reinitialize();
+            NDEditor.RepaintAll();
             SaveSettings();
-            SkillEditor.ChangeLanguage();
+            NDEditor.ChangeLanguage();
         }
         [Localizable(false)]
         private static string GetTranslators(string cultureName)
@@ -811,35 +811,35 @@ namespace ihaiu.NDraws
         {
             if (ShowHints)
             {
-                GUILayout.Box(Strings.get_Hint_Graph_View_Settings(), SkillEditorStyles.HintBox, new GUILayoutOption[0]);
+                GUILayout.Box(Strings.get_Hint_Graph_View_Settings(), NDEditorStyles.HintBox, new GUILayoutOption[0]);
             }
             GUILayout.Label(Strings.get_FsmEditorSettings_Category_Graph_Styles(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            SkillEditorStyles.ColorScheme colorScheme = (SkillEditorStyles.ColorScheme)EditorGUILayout.EnumPopup(new GUIContent(Strings.get_FsmEditorSettings_Color_Scheme(), Strings.get_FsmEditorSettings_Color_Scheme_Tooltip()), ColorScheme, new GUILayoutOption[0]);
+            NDEditorStyles.ColorScheme colorScheme = (NDEditorStyles.ColorScheme)EditorGUILayout.EnumPopup(new GUIContent(Strings.get_FsmEditorSettings_Color_Scheme(), Strings.get_FsmEditorSettings_Color_Scheme_Tooltip()), ColorScheme, new GUILayoutOption[0]);
             if (colorScheme != ColorScheme)
             {
                 ColorScheme = colorScheme;
-                SkillEditorStyles.Init();
+                NDEditorStyles.Init();
             }
             GraphViewLinkStyle = (GraphViewLinkStyle)EditorGUILayout.EnumPopup(new GUIContent(Strings.get_FsmEditorSettings_Link_Style(), Strings.get_FsmEditorSettings_Link_Style_Tooltip()), GraphViewLinkStyle, new GUILayoutOption[0]);
-            ColorLinks = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Color_Links_With_State_Color(), Strings.get_FsmEditorSettings_Color_Links_With_State_Color_Tooltip()), ColorLinks);
-            EnableWatermarks = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Enable_Watermarks(), Strings.get_FsmEditorSettings_Enable_Watermarks_Tooltip()), EnableWatermarks);
-            ShowFsmDescriptionInGraphView = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_FSM_Description_in_Graph_View(), ""), ShowFsmDescriptionInGraphView);
-            bool flag = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Comments_in_Graph_View(), Strings.get_FsmEditorSettings_Show_Comments_in_Graph_View_Tooltip()), ShowCommentsInGraphView);
+            ColorLinks = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Color_Links_With_State_Color(), Strings.get_FsmEditorSettings_Color_Links_With_State_Color_Tooltip()), ColorLinks);
+            EnableWatermarks = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Enable_Watermarks(), Strings.get_FsmEditorSettings_Enable_Watermarks_Tooltip()), EnableWatermarks);
+            ShowFsmDescriptionInGraphView = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_FSM_Description_in_Graph_View(), ""), ShowFsmDescriptionInGraphView);
+            bool flag = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Comments_in_Graph_View(), Strings.get_FsmEditorSettings_Show_Comments_in_Graph_View_Tooltip()), ShowCommentsInGraphView);
             if (flag != ShowCommentsInGraphView)
             {
                 ShowCommentsInGraphView = flag;
-                SkillEditor.GraphView.UpdateAllStateSizes();
+                NDEditor.GraphView.UpdateAllStateSizes();
                 GUI.set_changed(true);
             }
-            DrawFrameAroundGraph = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Draw_Frame_Around_FSM()), DrawFrameAroundGraph);
-            DrawLinksBehindStates = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Draw_Links_Behind_States()), DrawLinksBehindStates);
+            DrawFrameAroundGraph = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Draw_Frame_Around_FSM()), DrawFrameAroundGraph);
+            DrawLinksBehindStates = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Draw_Links_Behind_States()), DrawLinksBehindStates);
             GUILayout.Label(Strings.get_FsmEditorSettings_Scrolling(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            MouseWheelScrollsGraphView = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Mouse_Wheel_Scrolls_Graph_View(), Strings.get_FsmEditorSettings_DoGraphViewSettings_Tooltip()), MouseWheelScrollsGraphView);
-            ShowScrollBars = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Scrollbars_All_The_Time(), Strings.get_FsmEditorSettings_Show_Scrollbars_All_The_Time_Tooltip()), ShowScrollBars);
+            MouseWheelScrollsGraphView = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Mouse_Wheel_Scrolls_Graph_View(), Strings.get_FsmEditorSettings_DoGraphViewSettings_Tooltip()), MouseWheelScrollsGraphView);
+            ShowScrollBars = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Scrollbars_All_The_Time(), Strings.get_FsmEditorSettings_Show_Scrollbars_All_The_Time_Tooltip()), ShowScrollBars);
             EdgeScrollSpeed = EditorGUILayout.FloatField(new GUIContent(Strings.get_FsmEditorSettings_Edge_Scroll_Speed(), Strings.get_FsmEditorSettings_Edge_Scroll_Speed_Tooltip()), EdgeScrollSpeed, new GUILayoutOption[0]);
             GraphViewZoomSpeed = EditorGUILayout.FloatField(new GUIContent(Strings.get_FsmEditorSettings_Zoom_Speed(), Strings.get_FsmEditorSettings_DoGraphViewSettings_Zoom_Speed_Tooltip()), GraphViewZoomSpeed, new GUILayoutOption[0]);
             GUILayout.Label(Strings.get_FsmEditorSettings_Minimap(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
-            GraphViewShowMinimap = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Minimap()), GraphViewShowMinimap);
+            GraphViewShowMinimap = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Show_Minimap()), GraphViewShowMinimap);
             GraphViewMinimapSize = EditorGUILayout.FloatField(new GUIContent(Strings.get_FsmEditorSettings_Minimap_Size(), Strings.get_FsmEditorSettings_Minimap_Size_Tooltip()), GraphViewMinimapSize, new GUILayoutOption[0]);
             GraphViewMinimapSize = Mathf.Clamp(GraphViewMinimapSize, 50f, 1000f);
             GUILayout.Label(Strings.get_FsmEditorSettings_Category_Editing(), EditorStyles.get_boldLabel(), new GUILayoutOption[0]);
@@ -848,10 +848,10 @@ namespace ihaiu.NDraws
             if (num != StateMaxWidth)
             {
                 StateMaxWidth = num;
-                SkillEditor.GraphView.UpdateAllStateSizes();
+                NDEditor.GraphView.UpdateAllStateSizes();
             }
             SnapGridSize = EditorGUILayout.IntField(new GUIContent(Strings.get_FsmEditorSettings_Snap_Grid_Size(), Strings.get_FsmEditorSettings_Snap_Grid_Size_Tooltip()), SnapGridSize, new GUILayoutOption[0]);
-            SnapToGrid = SkillEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Snap_To_Grid()), SnapToGrid);
+            SnapToGrid = NDEditorGUILayout.RightAlignedToggle(new GUIContent(Strings.get_FsmEditorSettings_Snap_To_Grid()), SnapToGrid);
         }
         private static void ResetDefaults()
         {
@@ -1023,7 +1023,7 @@ namespace ihaiu.NDraws
             EditorPrefs.SetBool("PlayMaker.SelectNewVariables", SelectNewVariables);
             EditorPrefs.SetBool("PlayMaker.FsmBrowserShowFullPath", FsmBrowserShowFullPath);
             EditorPrefs.SetBool("PlayMaker.AutoRefreshActionUsage", AutoRefreshActionUsage);
-            SkillEditor.Repaint(true);
+            NDEditor.Repaint(true);
         }
         [Localizable(false)]
         public static void LoadSettings()
@@ -1072,7 +1072,7 @@ namespace ihaiu.NDraws
             DisableToolWindowsWhenPlaying = EditorPrefs.GetBool("PlayMaker.DisableToolWindowsWhenPlaying", true);
             DisableActionBrowerWhenPlaying = EditorPrefs.GetBool("PlayMaker.DisableActionBrowerWhenPlaying", false);
             DisableEventBrowserWhenPlaying = EditorPrefs.GetBool("PlayMaker.DisableEventBrowserWhenPlaying", false);
-            ColorScheme = (SkillEditorStyles.ColorScheme)EditorPrefs.GetInt("PlayMaker.ColorScheme", 0);
+            ColorScheme = (NDEditorStyles.ColorScheme)EditorPrefs.GetInt("PlayMaker.ColorScheme", 0);
             EnableRealtimeErrorChecker = EditorPrefs.GetBool("PlayMaker.EnableRealtimeErrorChecker", true);
             CheckForRequiredComponent = EditorPrefs.GetBool("PlayMaker.CheckForRequiredComponent", true);
             CheckForRequiredField = EditorPrefs.GetBool("PlayMaker.CheckForRequiredField", true);
@@ -1161,9 +1161,9 @@ namespace ihaiu.NDraws
             Skill.set_DebugRaycastColor(DebugRaycastColor);
             PlayMakerGUI.set_EnableStateLabels(ShowStateLabelsInGameView);
             SetCulture(selectedCulture);
-            if (SkillEditor.Instance != null)
+            if (NDEditor.Instance != null)
             {
-                SkillEditor.GraphView.ApplySettings();
+                NDEditor.GraphView.ApplySettings();
             }
         }
         public static int PackColorIntoInt(Color color)

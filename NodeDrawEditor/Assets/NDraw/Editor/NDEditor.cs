@@ -136,6 +136,9 @@ namespace ihaiu.NDraws
 
         public  bool            Initialized;
         private EditorWindow    window;
+
+        private bool repaint;
+        private bool repaintAll;
         #endregion
 
 
@@ -292,6 +295,36 @@ namespace ihaiu.NDraws
 //            NDEditor.instance.ResetViews();
 //            NDEditor.Repaint(true);
 //            NDEditor.RepaintAll();
+        }
+
+        public static void RepaintAll()
+        {
+            if (NDEditor.instance != null)
+            {
+                NDEditor.instance.repaintAll = true;
+            }
+        }
+
+        public void OnSelectionChange()
+        {
+          
+        }
+
+        public static void SelectNodeFromMenu(object userdata)
+        {
+        }
+
+        public static bool CreateAsset(UnityEngine.Object asset, ref string path)
+        {
+            path = path.Replace("//", "/");
+            if (asset == null)
+            {
+                Debug.LogError("Can't save null asset!");
+                return false;
+            }
+            AssetDatabase.CreateAsset(asset, path);
+            AssetDatabase.Refresh();
+            return true;
         }
         #endregion
     }

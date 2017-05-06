@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\NDraw\Editor\BaseEditorWindow.cs" />
+     <Compile Include="Assets\NDraw\Editor\CustomAttributeHelpers.cs" />
      <Compile Include="Assets\NDraw\Editor\DrawState.cs" />
      <Compile Include="Assets\NDraw\Editor\EditorApp.cs" />
      <Compile Include="Assets\NDraw\Editor\EditorCommands.cs" />
+     <Compile Include="Assets\NDraw\Editor\Events.cs" />
      <Compile Include="Assets\NDraw\Editor\Files.cs" />
      <Compile Include="Assets\NDraw\Editor\GameState.cs" />
      <Compile Include="Assets\NDraw\Editor\GameStateTracker.cs" />
@@ -66,8 +68,10 @@
      <Compile Include="Assets\NDraw\Editor\NDEditorSettings.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditorStyles.cs" />
      <Compile Include="Assets\NDraw\Editor\NDEditorWindow.cs" />
+     <Compile Include="Assets\NDraw\Editor\NDPaths.cs" />
      <Compile Include="Assets\NDraw\Editor\NDSelection.cs" />
      <Compile Include="Assets\NDraw\Editor\NDSelectionHistory.cs" />
+     <Compile Include="Assets\NDraw\Editor\WikiPages.cs" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity2/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

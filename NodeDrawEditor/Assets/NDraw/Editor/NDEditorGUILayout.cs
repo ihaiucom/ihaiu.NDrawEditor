@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine;
 namespace ihaiu.NDraws
 {
-    public class SkillEditorGUILayout
+    public class NDEditorGUILayout
     {
         private static string password;
         public static void LabelWidth(float labelWidth)
@@ -39,216 +39,90 @@ namespace ihaiu.NDraws
             }
 
             rect.x = rect.x + 18f;
+            rect.width = rect.width - 18f;
 
-            rect.set_x(rect.get_x() + 18f);
-            rect.set_width(rect.get_width() - 18f);
             int num = 0;
-            float num2 = rect.get_x();
+            float num2 = rect.x;
             for (int i = 0; i < columnText.Length; i++)
             {
                 GUIContent gUIContent = columnText[i];
                 Rect rect4 = new Rect(rect);
-                rect4.set_x(num2);
-                rect4.set_width(rect.get_width() * columnWidths[num]);
+                rect4.x = num2;
+                rect4.width = rect.width * columnWidths[num];
                 Rect rect5 = rect4;
                 if (GUI.Button(rect5, gUIContent, selected ? NDEditorStyles.TableRowTextSelected : NDEditorStyles.TableRowText))
                 {
                     result = num;
                 }
-                num2 += rect5.get_width();
+                num2 += rect5.width;
                 num++;
             }
             return result;
         }
-        public static GenericMenu GenerateFsmGameObjectSelectionMenu(bool hasAddFsmOption)
-        {
-            SkillEditor.RebuildFsmList();
-            List<GameObject> list = new List<GameObject>();
-            List<Skill> sortedFsmList = SkillEditor.SortedFsmList;
-            using (List<Skill>.Enumerator enumerator = sortedFsmList.GetEnumerator())
-            {
-                while (enumerator.MoveNext())
-                {
-                    Skill current = enumerator.get_Current();
-                    if (!list.Contains(current.get_GameObject()))
-                    {
-                        list.Add(current.get_GameObject());
-                    }
-                }
-            }
-            GenericMenu genericMenu = new GenericMenu();
-            List<string> list2 = new List<string>();
-            using (List<GameObject>.Enumerator enumerator2 = list.GetEnumerator())
-            {
-                while (enumerator2.MoveNext())
-                {
-                    GameObject current2 = enumerator2.get_Current();
-                    if (!(current2 == null))
-                    {
-                        string text = Labels.GenerateUniqueLabel(list2, current2.get_name());
-                        if (FsmEditorSettings.AddPrefabLabel && PrefabUtility.GetPrefabType(current2) == 1)
-                        {
-                            text += Strings.get_Label_Prefab_postfix();
-                        }
-                        list2.Add(text);
-                        genericMenu.AddItem(new GUIContent(text), SkillEditor.Selection.ActiveFsmGameObject == current2, new GenericMenu.MenuFunction2(SkillEditorGUILayout.SelectGameObject), current2);
-                    }
-                }
-            }
-            if (hasAddFsmOption)
-            {
-                genericMenu.AddSeparator(string.Empty);
-                if (Selection.get_activeGameObject() != null)
-                {
-                    string text2 = string.Format(Strings.get_Menu_Add_FSM_to__(), Selection.get_activeGameObject().get_name());
-                    genericMenu.AddItem(new GUIContent(text2), false, new GenericMenu.MenuFunction(SkillEditor.AddFsm));
-                }
-                else
-                {
-                    genericMenu.AddDisabledItem(new GUIContent(Strings.get_Menu_Disabled_Add_FSM_to_selected_object()));
-                }
-            }
-            return genericMenu;
-        }
+
         private static void SelectGameObject(object userdata)
         {
             GameObject activeGameObject = (GameObject)userdata;
-            bool lockGraphView = FsmEditorSettings.LockGraphView;
-            FsmEditorSettings.LockGraphView = false;
-            Selection.set_activeGameObject(activeGameObject);
-            SkillEditor.Instance.OnSelectionChange();
-            FsmEditorSettings.LockGraphView = lockGraphView;
+            bool lockGraphView = NDEditorSettings.LockGraphView;
+            NDEditorSettings.LockGraphView = false;
+            Selection.activeGameObject = activeGameObject;
+            NDEditor.Instance.OnSelectionChange();
+            NDEditorSettings.LockGraphView = lockGraphView;
         }
-        public static GenericMenu GenerateGameObjectFsmSelectionMenu()
-        {
-            List<Skill> list = new List<Skill>();
-            List<Skill> sortedFsmList = SkillEditor.SortedFsmList;
-            using (List<Skill>.Enumerator enumerator = sortedFsmList.GetEnumerator())
-            {
-                while (enumerator.MoveNext())
-                {
-                    Skill current = enumerator.get_Current();
-                    if (current.get_GameObject() == SkillEditor.Selection.ActiveFsmGameObject)
-                    {
-                        list.Add(current);
-                    }
-                }
-            }
-            GenericMenu genericMenu = new GenericMenu();
-            if (list.get_Count() == 0)
-            {
-                genericMenu.AddDisabledItem(new GUIContent(Strings.get_Label_None()));
-            }
-            else
-            {
-                using (List<Skill>.Enumerator enumerator2 = list.GetEnumerator())
-                {
-                    while (enumerator2.MoveNext())
-                    {
-                        Skill current2 = enumerator2.get_Current();
-                        string fsmLabel = Labels.GetFsmLabel(current2);
-                        genericMenu.AddItem(new GUIContent(fsmLabel), SkillEditor.SelectedFsm == current2, new GenericMenu.MenuFunction2(SkillEditor.SelectFsm), current2);
-                    }
-                }
-            }
-            genericMenu.AddSeparator(string.Empty);
-            if (Selection.get_activeGameObject() != null)
-            {
-                string text = string.Format(Strings.get_Menu_Add_FSM_to__(), Selection.get_activeGameObject().get_name());
-                genericMenu.AddItem(new GUIContent(text), false, new GenericMenu.MenuFunction(SkillEditor.AddFsm));
-            }
-            else
-            {
-                genericMenu.AddDisabledItem(new GUIContent(Strings.get_Menu_Disabled_Add_FSM_to_selected_object()));
-            }
-            return genericMenu;
-        }
-        public static GenericMenu GenerateFsmSelectionMenu(bool includeAssets, bool hasAddFsmOption)
+
+       
+        public static GenericMenu GenerateEventSelectionMenu(NDChart chart, NDEvent selectedEvent, GenericMenu.MenuFunction2 selectFunction, GenericMenu.MenuFunction newFunction)
         {
             GenericMenu genericMenu = new GenericMenu();
-            genericMenu.AddItem(new GUIContent(Strings.get_Menu_None_FSM()), false, new GenericMenu.MenuFunction2(SkillEditor.SelectFsm), null);
-            List<string> list = new List<string>();
-            List<Skill> sortedFsmList = SkillEditor.SortedFsmList;
-            using (List<Skill>.Enumerator enumerator = sortedFsmList.GetEnumerator())
+            bool flag = NDEvent.IsNullOrEmpty(selectedEvent);
+            genericMenu.AddItem(new GUIContent(Strings.Menu_None_Event), flag, selectFunction, null);
+            List<NDEvent> events = chart.Events;
+            for (int i = 0; i < events.Count; i++)
             {
-                while (enumerator.MoveNext())
-                {
-                    Skill current = enumerator.get_Current();
-                    if (current != null && (includeAssets || !SkillPrefabs.IsPersistent(current)))
-                    {
-                        string text = Labels.GenerateUniqueLabel(list, Labels.GetFullFsmLabel(current));
-                        list.Add(text);
-                        genericMenu.AddItem(new GUIContent(text), false, new GenericMenu.MenuFunction2(SkillEditor.SelectFsm), current);
-                    }
-                }
-            }
-            if (hasAddFsmOption)
-            {
-                genericMenu.AddSeparator(string.Empty);
-                if (Selection.get_activeGameObject() != null)
-                {
-                    string text2 = string.Format(Strings.get_Menu_Add_FSM_to__(), Selection.get_activeGameObject().get_name());
-                    genericMenu.AddItem(new GUIContent(text2), false, new GenericMenu.MenuFunction(SkillEditor.AddFsm));
-                }
-                else
-                {
-                    genericMenu.AddDisabledItem(new GUIContent(Strings.get_Menu_Disabled_Add_FSM_to_selected_object()));
-                }
-            }
-            return genericMenu;
-        }
-        public static GenericMenu GenerateEventSelectionMenu(Skill fsm, SkillEvent selectedEvent, GenericMenu.MenuFunction2 selectFunction, GenericMenu.MenuFunction newFunction)
-        {
-            GenericMenu genericMenu = new GenericMenu();
-            bool flag = SkillEvent.IsNullOrEmpty(selectedEvent);
-            genericMenu.AddItem(new GUIContent(Strings.get_Menu_None_Event()), flag, selectFunction, null);
-            SkillEvent[] events = fsm.get_Events();
-            for (int i = 0; i < events.Length; i++)
-            {
-                SkillEvent fsmEvent = events[i];
+                NDEvent fsmEvent = events[i];
                 flag = (fsmEvent == selectedEvent);
-                genericMenu.AddItem(new GUIContent(fsmEvent.get_Name()), flag, selectFunction, fsmEvent);
+                genericMenu.AddItem(new GUIContent(fsmEvent.Name), flag, selectFunction, fsmEvent);
             }
             genericMenu.AddSeparator(string.Empty);
-            genericMenu.AddItem(new GUIContent(Strings.get_Menu_New_Event()), false, newFunction);
+            genericMenu.AddItem(new GUIContent(Strings.Menu_New_Event), false, newFunction);
             return genericMenu;
         }
-        public static GenericMenu GenerateStateSelectionMenu(Skill fsm, string selectedState, GenericMenu.MenuFunction2 selectFunction)
+        public static GenericMenu GenerateStateSelectionMenu(NDChart chart, string selectedNode, GenericMenu.MenuFunction2 selectFunction)
         {
             GenericMenu genericMenu = new GenericMenu();
-            bool flag = string.IsNullOrEmpty(selectedState);
-            genericMenu.AddItem(new GUIContent(Strings.get_Menu_None_State()), flag, selectFunction, null);
-            SkillState[] states = fsm.get_States();
-            for (int i = 0; i < states.Length; i++)
+            bool flag = string.IsNullOrEmpty(selectedNode);
+            genericMenu.AddItem(new GUIContent(Strings.Menu_None_Node), flag, selectFunction, null);
+            List<NDNode> nodes = chart.Nodes;
+            for (int i = 0; i < nodes.Count; i++)
             {
-                SkillState fsmState = states[i];
-                flag = (fsmState.get_Name() == selectedState);
-                genericMenu.AddItem(new GUIContent(fsmState.get_Name()), flag, selectFunction, fsmState.get_Name());
+                NDNode node = nodes[i];
+                flag = (node.Name == selectedNode);
+                genericMenu.AddItem(new GUIContent(node.Name), flag, selectFunction, node.Name);
             }
             return genericMenu;
         }
-        public static GenericMenu GenerateStateSelectionMenu(Skill fsm)
+        public static GenericMenu GenerateStateSelectionMenu(NDChart chart)
         {
             GenericMenu genericMenu = new GenericMenu();
-            SkillState[] states = fsm.get_States();
-            for (int i = 0; i < states.Length; i++)
+            List<NDNode> nodes = chart.Nodes;
+            for (int i = 0; i < nodes.Count; i++)
             {
-                SkillState fsmState = states[i];
-                genericMenu.AddItem(new GUIContent(fsmState.get_Name()), false, new GenericMenu.MenuFunction2(SkillEditor.SelectStateFromMenu), fsmState.get_Name());
+                NDNode node = nodes[i];
+                genericMenu.AddItem(new GUIContent(node.Name), false, new GenericMenu.MenuFunction2(NDEditor.SelectNodeFromMenu), node.Name);
             }
             return genericMenu;
         }
-        public static SkillEvent EventPopup(GUIContent label, List<SkillEvent> eventList, SkillEvent selectedEvent)
+        public static NDEvent EventPopup(GUIContent label, List<NDEvent> eventList, NDEvent selectedEvent)
         {
             GUIContent[] eventNamesFromList = Events.GetEventNamesFromList(eventList);
-            string text = (selectedEvent == null) ? null : selectedEvent.get_Name();
+            string text = (selectedEvent == null) ? null : selectedEvent.Name;
             int num = -1;
             int num2 = 0;
             GUIContent[] array = eventNamesFromList;
             for (int i = 0; i < array.Length; i++)
             {
                 GUIContent gUIContent = array[i];
-                if (gUIContent.get_text() == text)
+                if (gUIContent.text == text)
                 {
                     num = num2;
                     break;
@@ -258,13 +132,13 @@ namespace ihaiu.NDraws
             int num3 = EditorGUILayout.Popup(label, num, eventNamesFromList, new GUILayoutOption[0]);
             if (num3 > 0)
             {
-                string text2 = eventNamesFromList[num3].get_text();
-                using (List<SkillEvent>.Enumerator enumerator = eventList.GetEnumerator())
+                string text2 = eventNamesFromList[num3].text;
+                using (List<NDEvent>.Enumerator enumerator = eventList.GetEnumerator())
                 {
                     while (enumerator.MoveNext())
                     {
-                        SkillEvent current = enumerator.get_Current();
-                        if (current.get_Name() == text2)
+                        NDEvent current = enumerator.Current;
+                        if (current.Name == text2)
                         {
                             return current;
                         }
@@ -289,12 +163,12 @@ namespace ihaiu.NDraws
                     for (int i = 0; i < components.Length; i++)
                     {
                         MonoBehaviour behaviour2 = components[i];
-                        list2.AddRange(SkillEditorGUILayout.GetMethodNames(behaviour2, maxParameters, coroutinesOnly));
+                        list2.AddRange(NDEditorGUILayout.GetMethodNames(behaviour2, maxParameters, coroutinesOnly));
                     }
                 }
                 else
                 {
-                    list2.AddRange(SkillEditorGUILayout.GetMethodNames(behaviour, maxParameters, coroutinesOnly));
+                    list2.AddRange(NDEditorGUILayout.GetMethodNames(behaviour, maxParameters, coroutinesOnly));
                 }
             }
             int num = EditorGUILayout.Popup(-1, list2.ToArray(), new GUILayoutOption[]
@@ -663,11 +537,11 @@ namespace ihaiu.NDraws
         public static void PrefixLabel(GUIContent label)
         {
             GUIStyle followingStyle = "Button";
-            SkillEditorGUILayout.PrefixLabel(label, followingStyle);
+            NDEditorGUILayout.PrefixLabel(label, followingStyle);
         }
         public static void PrefixLabel(string text)
         {
-            SkillEditorGUILayout.PrefixLabel(SkillEditorContent.TempContent(text, ""));
+            NDEditorGUILayout.PrefixLabel(SkillEditorContent.TempContent(text, ""));
         }
         public static void PrefixLabel(GUIContent label, GUIStyle followingStyle)
         {
@@ -763,7 +637,7 @@ namespace ihaiu.NDraws
         }
         public static bool BoldFoldout(bool state, GUIContent content)
         {
-            SkillEditorGUILayout.Divider(new GUILayoutOption[0]);
+            NDEditorGUILayout.Divider(new GUILayoutOption[0]);
             return EditorGUILayout.Foldout(state, content, NDEditorStyles.BoldFoldout);
         }
         public static bool ActionFoldout(bool isOpen)
@@ -773,7 +647,7 @@ namespace ihaiu.NDraws
         public static bool DeleteButton()
         {
             SkillEditorContent.DeleteButton.set_tooltip((DragAndDropManager.mode == DragAndDropManager.DragMode.None) ? Strings.get_Command_Delete() : null);
-            return SkillEditorGUILayout.MiniButtonPadded(SkillEditorContent.DeleteButton, new GUILayoutOption[0]);
+            return NDEditorGUILayout.MiniButtonPadded(SkillEditorContent.DeleteButton, new GUILayoutOption[0]);
         }
         public static bool ToolbarDeleteButton()
         {
@@ -786,7 +660,7 @@ namespace ihaiu.NDraws
         public static bool ResetButton()
         {
             SkillEditorContent.ResetButton.set_tooltip((DragAndDropManager.mode == DragAndDropManager.DragMode.None) ? Strings.get_Command_Reset() : null);
-            return SkillEditorGUILayout.MiniButton(SkillEditorContent.ResetButton, new GUILayoutOption[0]);
+            return NDEditorGUILayout.MiniButton(SkillEditorContent.ResetButton, new GUILayoutOption[0]);
         }
         public static bool HelpButtonSmall(string tooltip)
         {
@@ -940,13 +814,13 @@ namespace ihaiu.NDraws
             {
                 EditorGUILayout.HelpBox(Strings.get_Label_This_FSM_is_Locked(), 1);
                 GUILayout.BeginHorizontal(new GUILayoutOption[0]);
-                SkillEditorGUILayout.password = EditorGUILayout.TextField(SkillEditorGUILayout.password, new GUILayoutOption[0]);
+                NDEditorGUILayout.password = EditorGUILayout.TextField(NDEditorGUILayout.password, new GUILayoutOption[0]);
                 if (GUILayout.Button(Strings.get_Label_Unlock(), new GUILayoutOption[]
                     {
                         GUILayout.MaxWidth(60f)
                     }))
                 {
-                    SkillEditorGUILayout.UnlockFSM(fsm);
+                    NDEditorGUILayout.UnlockFSM(fsm);
                 }
                 GUILayout.EndHorizontal();
             }
@@ -957,25 +831,25 @@ namespace ihaiu.NDraws
             {
                 return;
             }
-            SkillEditorGUILayout.Divider(new GUILayoutOption[0]);
+            NDEditorGUILayout.Divider(new GUILayoutOption[0]);
             GUILayout.BeginHorizontal(new GUILayoutOption[0]);
             GUILayout.Label(Strings.get_Label_Password(), new GUILayoutOption[]
                 {
                     GUILayout.MaxWidth(70f)
                 });
-            SkillEditorGUILayout.password = EditorGUILayout.TextField(SkillEditorGUILayout.password, new GUILayoutOption[0]);
+            NDEditorGUILayout.password = EditorGUILayout.TextField(NDEditorGUILayout.password, new GUILayoutOption[0]);
             if (GUILayout.Button(SkillEditorContent.LockFsmButton, new GUILayoutOption[]
                 {
                     GUILayout.MaxWidth(60f)
                 }))
             {
-                SkillEditorGUILayout.LockFSM(fsm);
+                NDEditorGUILayout.LockFSM(fsm);
             }
             GUILayout.EndHorizontal();
         }
         public static void UnlockFSM(Skill fsm)
         {
-            fsm.Unlock(SkillEditorGUILayout.Md5Sum(SkillEditorGUILayout.password));
+            fsm.Unlock(NDEditorGUILayout.Md5Sum(NDEditorGUILayout.password));
             if (fsm.get_Locked())
             {
                 Dialogs.OkDialog(Strings.get_ProductName(), Strings.get_Dialog_UnlockFSM_Wrong_Password());
@@ -985,8 +859,8 @@ namespace ihaiu.NDraws
         }
         public static void LockFSM(Skill fsm)
         {
-            fsm.Lock(SkillEditorGUILayout.Md5Sum(SkillEditorGUILayout.password));
-            SkillEditorGUILayout.password = string.Empty;
+            fsm.Lock(NDEditorGUILayout.Md5Sum(NDEditorGUILayout.password));
+            NDEditorGUILayout.password = string.Empty;
             SkillEditor.SetFsmDirty(fsm, false, false, true);
         }
         [Localizable(false)]
@@ -1020,7 +894,7 @@ namespace ihaiu.NDraws
                 window.Close();
                 return false;
             }
-            if (SkillEditorGUILayout.DoToolWindowsDisabledGUI())
+            if (NDEditorGUILayout.DoToolWindowsDisabledGUI())
             {
                 return false;
             }
@@ -1039,7 +913,7 @@ namespace ihaiu.NDraws
         }
         private static bool DoToolWindowsDisabledGUI()
         {
-            if (SkillEditorGUILayout.DoEditorDisabledGUI())
+            if (NDEditorGUILayout.DoEditorDisabledGUI())
             {
                 return true;
             }

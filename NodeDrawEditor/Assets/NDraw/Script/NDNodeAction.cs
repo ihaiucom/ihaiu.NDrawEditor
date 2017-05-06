@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 namespace ihaiu.NDraws
 {
-    public abstract class SkillStateAction
+    public abstract class NDNodeAction
     {
         private string name;
         private bool enabled = true;

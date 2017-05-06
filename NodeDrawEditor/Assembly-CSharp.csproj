@@ -45,6 +45,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\NDraw\Script\Attributes\ActionSection.cs" />
+     <Compile Include="Assets\NDraw\Script\Attributes\HelpUrlAttribute.cs" />
+     <Compile Include="Assets\NDraw\Script\Attributes\NoteAttribute.cs" />
+     <Compile Include="Assets\NDraw\Script\Attributes\ObjectTypeAttribute.cs" />
+     <Compile Include="Assets\NDraw\Script\Attributes\TitleAttribute.cs" />
+     <Compile Include="Assets\NDraw\Script\Attributes\TooltipAttribute.cs" />
+     <Compile Include="Assets\NDraw\Script\Attributes\UIHintAttribute.cs" />
      <Compile Include="Assets\NDraw\Script\INameable.cs" />
      <Compile Include="Assets\NDraw\Script\NDChart.cs" />
      <Compile Include="Assets\NDraw\Script\NDChartTemplate.cs" />
@@ -59,6 +66,7 @@
      <Compile Include="Assets\NDraw\Script\NDTransition.cs" />
      <Compile Include="Assets\NDraw\Script\NDlUtility.cs" />
      <Compile Include="Assets\NDraw\Script\Strings.cs" />
+     <Compile Include="Assets\NDraw\Script\UIHint.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity2/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

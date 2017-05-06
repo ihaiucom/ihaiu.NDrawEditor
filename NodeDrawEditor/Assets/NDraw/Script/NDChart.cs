@@ -35,10 +35,13 @@ namespace ihaiu.NDraws
         private string              name;
 
         [SerializeField]
-        private List<NDNode>        nodes       = new List<NDNode>();
+        private List<NDNode>        nodes           = new List<NDNode>();
 
         [SerializeField]
-        private List<NDTransition>  transitions = new List<NDTransition>();
+        private List<NDTransition>  transitions     = new List<NDTransition>();
+
+        [SerializeField]
+        private List<NDEvent>       events          = new List<NDEvent>();
 
         [SerializeField]
         private NDNode              startNode;
@@ -272,6 +275,21 @@ namespace ihaiu.NDraws
                 this.transitions = value;
             }
         }
+
+
+        public List<NDEvent> Events
+        {
+            get
+            {
+                return this.events;
+            }
+            set
+            {
+                this.events = value;
+            }
+        }
+
+
 
 
         public NDNode ActiveNode

@@ -12,7 +12,7 @@ namespace ihaiu.NDraws
             }
             return GetDrawNode(chart, false, chart.Active, NDChart.BreakAtchart == chart, false);
         }
-        public static DrawState GetDrawNode(NDChart chart, NDNode node, SkillStateAction action)
+        public static DrawState GetDrawNode(NDChart chart, NDNode node, NDNodeAction action)
         {
             if (chart == null)
             {
